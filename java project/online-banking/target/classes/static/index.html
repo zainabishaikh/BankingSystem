@@ -1,0 +1,155 @@
+<!DOCTYPE vault-html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault Online Banking</title>
+    <meta name="description" content="A premium online banking experience.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Auth Container -->
+    <div id="auth-container" class="glass-panel active">
+        <h1 class="logo">VAULT.</h1>
+        <p class="subtitle">Secure. Premium. Yours.</p>
+        
+        <div id="login-form-container">
+            <h2 class="form-title">Welcome Back</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="text" id="login-username" required placeholder=" " autocomplete="off">
+                    <label for="login-username">Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="login-password" required placeholder=" ">
+                    <label for="login-password">Password</label>
+                </div>
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+            <div class="form-links">
+                <button type="button" class="btn-text" onclick="showForm('register')">Create an account</button>
+                <button type="button" class="btn-text" onclick="showForm('forgot')">Forgot password?</button>
+            </div>
+            <div id="login-error" class="error-msg"></div>
+        </div>
+
+        <div id="register-form-container" class="hidden">
+            <h2 class="form-title">Join Vault</h2>
+            <form id="register-form">
+                <div class="input-group">
+                    <input type="text" id="reg-username" required placeholder=" " autocomplete="off">
+                    <label for="reg-username">Choose Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="reg-password" required placeholder=" ">
+                    <label for="reg-password">Create Password</label>
+                </div>
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+            <div class="form-links">
+                <button type="button" class="btn-text" onclick="showForm('login')">Back to Sign In</button>
+            </div>
+            <div id="reg-error" class="error-msg"></div>
+        </div>
+
+        <div id="forgot-form-container" class="hidden">
+            <h2 class="form-title">Reset Password</h2>
+            <form id="forgot-form">
+                <div class="input-group">
+                    <input type="text" id="forgot-username" required placeholder=" " autocomplete="off">
+                    <label for="forgot-username">Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="forgot-password" required placeholder=" ">
+                    <label for="forgot-password">New Password</label>
+                </div>
+                <button type="submit" class="btn-primary">Reset Password</button>
+            </form>
+            <div class="form-links">
+                <button type="button" class="btn-text" onclick="showForm('login')">Back to Sign In</button>
+            </div>
+            <div id="forgot-msg" class="msg"></div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard-container hidden">
+        <header class="dash-header glass-panel">
+            <h1 class="logo small">VAULT.</h1>
+            <div class="user-controls">
+                <span id="user-greeting">Hello, User</span>
+                <button class="btn-secondary btn-small" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <main class="dash-main">
+            <!-- Left Column: Balance & Actions -->
+            <section class="dash-col">
+                <div class="card balance-card glass-panel premium-gradient">
+                    <h3 class="card-title">Total Balance</h3>
+                    <div class="balance-amount" id="account-balance">₹0.00</div>
+                    <div class="account-info">Acc: <span id="account-number">----</span></div>
+                </div>
+
+                <div class="card action-card glass-panel">
+                    <h3 class="card-title">Quick Transfer</h3>
+                    <div class="action-tabs">
+                        <button class="tab-btn active" onclick="switchActionTab('deposit')">Deposit</button>
+                        <button class="tab-btn" onclick="switchActionTab('withdraw')">Withdraw</button>
+                    </div>
+                    <form id="transaction-form">
+                        <div class="input-group">
+                            <input type="number" id="tx-amount" required placeholder=" " min="0.01" step="0.01">
+                            <label for="tx-amount">Amount (₹)</label>
+                        </div>
+                        <button type="submit" class="btn-primary w-full" id="tx-btn">Execute Deposit</button>
+                    </form>
+                    <div id="tx-msg" class="msg"></div>
+                </div>
+            </section>
+
+            <!-- Right Column: History -->
+            <section class="dash-col flex-2">
+                <div class="card history-card glass-panel">
+                    <div class="history-header">
+                        <h3 class="card-title">Transaction History</h3>
+                        <div class="filter-group">
+                            <input type="text" id="search-tx" class="search-input" placeholder="Search amounts...">
+                            <select id="filter-type" class="filter-select">
+                                <option value="ALL">All Types</option>
+                                <option value="DEPOSIT">Deposits</option>
+                                <option value="WITHDRAWAL">Withdrawals</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tx-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tx-body">
+                                <!-- Transactions injected here -->
+                            </tbody>
+                        </table>
+                        <div id="no-tx-msg" class="empty-state">No transactions found.</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
